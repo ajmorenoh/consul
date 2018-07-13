@@ -6,10 +6,10 @@ feature 'Executions' do
   let(:group)   { create(:budget_group, budget: budget) }
   let(:heading) { create(:budget_heading, group: group, price: 1000) }
 
-  let!(:investment1) { create(:budget_investment, :selected,     heading: heading, price: 200, ballot_lines_count: 900) }
-  let!(:investment2) { create(:budget_investment, :selected,     heading: heading, price: 300, ballot_lines_count: 800) }
+  let!(:investment1) { create(:budget_investment, :winner,       heading: heading, price: 200, ballot_lines_count: 900) }
+  let!(:investment2) { create(:budget_investment, :winner,       heading: heading, price: 300, ballot_lines_count: 800) }
   let!(:investment3) { create(:budget_investment, :incompatible, heading: heading, price: 500, ballot_lines_count: 700) }
-  let!(:investment4) { create(:budget_investment, :selected,     heading: heading, price: 600, ballot_lines_count: 600) }
+  let!(:investment4) { create(:budget_investment, :winner,       heading: heading, price: 600, ballot_lines_count: 600) }
 
   scenario 'only displays investments with milestones' do
     create(:budget_investment_milestone, investment: investment1)
@@ -26,6 +26,23 @@ feature 'Executions' do
     expect(page).not_to have_content(investment3.title)
     expect(page).not_to have_content(investment4.title)
   end
+
+  scenario 'render a message for headings without winner investments' do
+    empty_group   = create(:budget_group, budget: budget)
+    empty_heading = create(:budget_heading, group: empty_group, price: 1000)
+
+    visit budget_path(budget)
+    click_link 'See results'
+
+    expect(page).to have_content(heading.name)
+    expect(page).to have_content(empty_heading.name)
+
+    click_link 'Milestones'
+    click_link "#{empty_heading.name}"
+
+    expect(page).to have_content('No winner investments for this heading')
+  end
+
 
   context 'Images' do
     scenario 'renders milestone image if available' do
@@ -121,7 +138,7 @@ feature 'Executions' do
       expect(page).not_to have_content(investment2.title)
     end
 
-    xscenario 'are based on latest milestone status', :js do
+    scenario 'are based on latest milestone status', :js do
       create(:budget_investment_milestone, investment: investment1,
                                            publication_date: Date.yesterday,
                                            status: status1)
@@ -140,10 +157,12 @@ feature 'Executions' do
       select 'Studying the project', from: 'status'
 
       expect(page).not_to have_content(investment1.title)
+      expect(page).to have_content('No winner investments for this heading')
 
       select 'Bidding', from: 'status'
 
       expect(page).to have_content(investment1.title)
+      expect(page).not_to have_content('No winner investments for this heading')
     end
   end
 

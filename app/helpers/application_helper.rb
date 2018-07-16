@@ -64,7 +64,7 @@ module ApplicationHelper
 
   def g(key, interpolations = {})
     Globalize.with_locale(locale) do
-      string = I18nContent.where(key: key).first.value
+      string = I18nContent.where(key: key).first&.value
       interpolations.each do |key, value|
         string.sub! "%{#{key}}", (value || "%{#{key}}")
       end

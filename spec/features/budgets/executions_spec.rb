@@ -6,10 +6,10 @@ feature 'Executions' do
   let(:group)   { create(:budget_group, budget: budget) }
   let(:heading) { create(:budget_heading, group: group, price: 1000) }
 
-  let!(:investment1) { create(:budget_investment, :selected,     heading: heading, price: 200, ballot_lines_count: 900) }
-  let!(:investment2) { create(:budget_investment, :selected,     heading: heading, price: 300, ballot_lines_count: 800) }
+  let!(:investment1) { create(:budget_investment, :winner,       heading: heading, price: 200, ballot_lines_count: 900) }
+  let!(:investment2) { create(:budget_investment, :winner,       heading: heading, price: 300, ballot_lines_count: 800) }
   let!(:investment3) { create(:budget_investment, :incompatible, heading: heading, price: 500, ballot_lines_count: 700) }
-  let!(:investment4) { create(:budget_investment, :selected,     heading: heading, price: 600, ballot_lines_count: 600) }
+  let!(:investment4) { create(:budget_investment, :winner,       heading: heading, price: 600, ballot_lines_count: 600) }
 
   scenario 'only displays investments with milestones' do
     create(:budget_investment_milestone, investment: investment1)
@@ -25,6 +25,39 @@ feature 'Executions' do
     expect(page).not_to have_content(investment2.title)
     expect(page).not_to have_content(investment3.title)
     expect(page).not_to have_content(investment4.title)
+  end
+
+  scenario "Do not display headings with no winning investments for selected status" do
+    create(:budget_investment_milestone, investment: investment1)
+
+    empty_group   = create(:budget_group, budget: budget)
+    empty_heading = create(:budget_heading, group: empty_group, price: 1000)
+
+    visit budget_path(budget)
+    click_link 'See results'
+
+    expect(page).to have_content(heading.name)
+    expect(page).to have_content(empty_heading.name)
+
+    click_link 'Milestones'
+
+    expect(page).to have_content(heading.name)
+    expect(page).not_to have_content(empty_heading.name)
+  end
+
+  scenario "Show message when there are no winning investments with the selected status", :js do
+    create(:budget_investment_status, name: I18n.t('seeds.budgets.statuses.executed'))
+
+    visit budget_path(budget)
+
+    click_link 'See results'
+    click_link 'Milestones'
+
+    expect(page).not_to have_content('No winner investments in this state')
+
+    select 'Executed', from: 'status'
+
+    expect(page).to have_content('No winner investments in this state')
   end
 
   context 'Images' do
@@ -121,7 +154,7 @@ feature 'Executions' do
       expect(page).not_to have_content(investment2.title)
     end
 
-    xscenario 'are based on latest milestone status', :js do
+    scenario 'are based on latest milestone status', :js do
       create(:budget_investment_milestone, investment: investment1,
                                            publication_date: Date.yesterday,
                                            status: status1)
@@ -144,7 +177,37 @@ feature 'Executions' do
       select 'Bidding', from: 'status'
 
       expect(page).to have_content(investment1.title)
+      expect(page).not_to have_content('No winner investments for this heading')
     end
   end
 
+  context 'Spending Proposals' do
+    let!(:budget) { create(:budget, :finished, slug: '2016') }
+
+    scenario 'can navigate from spending proposal Results page to Executions page' do
+      create(:budget_investment_milestone, investment: investment1)
+
+      visit participatory_budget_results_path
+
+      click_on 'Milestones'
+
+      expect(page).to have_current_path(participatory_budget_executions_path)
+      expect(page).to have_css('.budget-execution', count: 1)
+      within('.budget-execution') do
+        expect(page).to have_content(investment1.title)
+      end
+    end
+
+    scenario 'renders spending proposal navigation when accessing 2016 budget' do
+      create(:budget_investment_milestone, investment: investment1)
+
+      visit participatory_budget_executions_path
+
+      expect(page).to have_current_path(participatory_budget_executions_path)
+
+      click_on 'Results'
+
+      expect(page).to have_current_path(participatory_budget_results_path)
+    end
+  end
 end

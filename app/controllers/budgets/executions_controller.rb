@@ -7,14 +7,19 @@ module Budgets
     def show
       authorize! :read_executions, @budget
       @statuses = ::Budget::Investment::Status.all
-      @headings = @budget.headings
-                         .includes(investments: :milestones)
-                         .joins(investments: :milestones)
-                         .distinct
-                         .order(id: :asc)
 
       if params[:status].present?
-        @headings = @headings.where(filter_investment_by_latest_milestone, params[:status])
+        @investments_by_heading = @budget.investments.winners
+                      .joins(:milestones).includes(:milestones)
+                      .select { |i| i.milestones.published.with_status
+                                                .order_by_publication_date.last
+                                                .status_id == params[:status].to_i }
+                      .uniq
+                      .group_by(&:heading)
+      else
+        @investments_by_heading = @budget.investments.winners
+                                         .joins(:milestones).includes(:milestones)
+                                         .distinct.group_by(&:heading)
       end
     end
 
@@ -22,13 +27,6 @@ module Budgets
 
       def load_budget
         @budget = Budget.find_by(slug: params[:id]) || Budget.find_by(id: params[:id])
-      end
-
-      def filter_investment_by_latest_milestone
-        <<-SQL
-          (SELECT status_id FROM budget_investment_milestones
-           WHERE investment_id = budget_investments.id ORDER BY publication_date DESC LIMIT 1) = ?
-        SQL
       end
   end
 end

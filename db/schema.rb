@@ -1449,6 +1449,19 @@ ActiveRecord::Schema.define(version: 20190507102732) do
     t.index ["proposals_count"], name: "index_tags_on_proposals_count", using: :btree
   end
 
+  create_table "tenants", force: :cascade do |t|
+    t.string   "name"
+    t.string   "title"
+    t.string   "subdomain"
+    t.string   "postal_code"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "endpoint_census"
+    t.string   "institution_code_census"
+    t.string   "portal_name_census"
+    t.string   "user_code_census"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string   "title",                      null: false
     t.text     "description"

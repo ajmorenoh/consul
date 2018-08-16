@@ -540,7 +540,7 @@ DEPENDENCIES
   ahoy_matey (~> 1.6.0)
   ancestry (~> 3.0.2)
   animate-rails (~> 1.0.10)
-  apartment
+  apartment (~> 2.2)
   autoprefixer-rails (~> 8.2.0)
   browser (~> 2.5.3)
   bullet (~> 5.7.0)

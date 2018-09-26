@@ -1,6 +1,9 @@
 require 'i18n/exceptions'
 require 'action_view/helpers/tag_helper'
 
+require "i18n/backend/pluralization"
+I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)
+
 module ActionView
   module Helpers
     module TranslationHelper

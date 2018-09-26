@@ -80,8 +80,6 @@ en:
         submit_button: Start a debate
     debate:
       comments:
-        one: 1 comment
-        other: "%{count} comments"
         zero: No comments
       votes:
         one: 1 vote

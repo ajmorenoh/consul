@@ -103,6 +103,7 @@ es:
         unverified_user: Usuario no verificado
       create: Crear nuevo proyecto
       filters:
+        heading: Concepto
         unfeasible: Proyectos no factibles
       print:
         print_button: Imprimir

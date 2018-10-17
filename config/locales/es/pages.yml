@@ -41,6 +41,8 @@ es:
         title: "Procesos legislativos"
         description: "En la sección de %{link} la ciudadanía participa en la elaboración y modificación de normativa que afecta a la ciudad y puede dar su opinión sobre las políticas municipales en debates previos."
         link: "procesos legislativos"
+        feature: "Para participar en un proceso hay que %{sign_up} y consultar la página de %{link} periódicamente para saber qué normativas y políticas se están debatiendo y consultando."
+        sign_up: "registrarse en %{org}"
       faq:
         title: "¿Problemas técnicos?"
         description: "Lee las preguntas frecuentes y resuelve tus dudas."

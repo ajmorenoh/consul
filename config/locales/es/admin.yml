@@ -68,6 +68,7 @@ es:
           on_debates: Debates
           on_proposals: Propuestas
           on_users: Usuarios
+          on_system_emails: Emails del sistema
         title: Actividad de los Moderadores
         type: Tipo
         no_activity: No hay actividad de moderadores.
@@ -172,6 +173,7 @@ es:
           selected: Seleccionados
           undecided: Sin decidir
           unfeasible: Inviables
+          min_total_supports: Apoyos mínimos
           winners: Ganadores
           one_filter_html: "Filtros en uso: <b><em>%{filter}</em></b>"
           two_filters_html: "Filtros en uso: <b><em>%{filter}, %{advanced_filters}</em></b>"
@@ -560,6 +562,9 @@ es:
       stats: Estadísticas
       signature_sheets: Hojas de firmas
       site_customization:
+        homepage: Homepage
+        pages: Personalizar páginas
+        images: Personalizar imágenes
         content_blocks: Personalizar bloques
         information_texts: Personalizar textos
         information_texts_menu:
@@ -756,6 +761,7 @@ es:
         updated: "Evaluador actualizado correctamente"
       show:
         description: "Descripción"
+        email: "Email"
         group: "Grupo"
         no_description: "Sin descripción"
         no_group: "Sin grupo"
@@ -1396,6 +1402,7 @@ es:
           title: Título
           slug: Slug
     homepage:
+      title: Homepage
       description: Los módulos activos aparecerán en la homepage en el mismo orden que aquí.
       header_title: Encabezado
       no_header: No hay encabezado.
@@ -1411,6 +1418,7 @@ es:
       feeds:
         proposals: Propuestas
         processes: Procesos
+        debates: Debates
       new:
         header_title: Nuevo encabezado
         submit_header: Crear encabezado
@@ -1421,6 +1429,6 @@ es:
         submit_header: Guardar encabezado
         card_title: Editar tarjeta
         submit_card: Guardar tarjeta
-      translations:
+    translations:
       add_language: Añadir idioma
       remove_language: Eliminar idioma

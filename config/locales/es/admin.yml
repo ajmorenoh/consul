@@ -152,10 +152,7 @@ es:
           title: Título
           supports: Apoyos
         filters:
-<<<<<<< HEAD
           valuation_open: Abiertos
-=======
->>>>>>> 8671d2e... Update translations from Crowdin
           all: Todos
           without_admin: Sin administrador
           without_valuator: Sin evaluador
@@ -183,7 +180,6 @@ es:
           undecided: "Sin decidir"
         selected: "Seleccionado"
         select: "Seleccionar"
-<<<<<<< HEAD
         list:
           id: ID
           title: Título
@@ -199,8 +195,6 @@ es:
           author_username: Usuario autor
           incompatible: Incompatible
         see_results: "Ver resultados"
-=======
->>>>>>> 8671d2e... Update translations from Crowdin
         cannot_calculate_winners: El presupuesto debe estar en las fases "Votación final", "Votación finalizada" o "Resultados" para poder calcular las propuestas ganadoras
         see_results: "Ver resultados"
       show:
@@ -268,14 +262,11 @@ es:
         image: "Imagen"
         show_image: "Mostrar imagen"
         documents: "Documentos"
-<<<<<<< HEAD
       form:
         admin_statuses: Gestionar estados de proyectos
         no_statuses_defined: No hay estados definidos
         admin_statuses: Gestionar estados de proyectos
         no_statuses_defined: No hay estados definidos
-=======
->>>>>>> 8671d2e... Update translations from Crowdin
       new:
         creating: Crear hito
         date: Fecha

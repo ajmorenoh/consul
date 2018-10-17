@@ -229,11 +229,8 @@ fr:
       my_account_link: Mon compte
       my_activity_link: Mon activité
       open: ouvert
-<<<<<<< HEAD
       open_city_title: Aimez la ville, et elle deviendra la ville que vous aimez
       open_data: Open data
-=======
->>>>>>> f640a0a... Update Crowdin translations
       open_gov: Gouvernement ouvert
       proposals: Propositions
       poll_questions: Votes

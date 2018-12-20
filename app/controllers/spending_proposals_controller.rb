@@ -178,7 +178,7 @@ class SpendingProposalsController < ApplicationController
 
     def participants
       stats_cache('participants') do
-        users = (authors + voters + balloters + delegators).uniq
+        users = (authors + voters + balloters).uniq
         User.where(id: users)
       end
     end
@@ -231,10 +231,6 @@ class SpendingProposalsController < ApplicationController
       stats_cache("balloters_geozone_#{geozone_id}") do
         Ballot.where('ballot_lines_count > ? AND geozone_id = ?', 0, geozone_id).pluck(:user_id)
       end
-    end
-
-    def delegators
-      stats_cache('delegators') { User.where.not(representative_id: nil).pluck(:id) }
     end
 
     def total_spending_proposals

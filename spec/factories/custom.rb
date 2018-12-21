@@ -20,17 +20,8 @@ FactoryBot.define do
     user
   end
 
-  factory :represented_user, class: 'User' do
+  factory :represented_user, parent: :user, traits: [:level_three] do
     association :representative, factory: :forum
-
-    sequence(:username) { |n| "Represented#{n}" }
-    sequence(:email)    { |n| "represented#{n}@consul.dev" }
-
-    password            'vote_delegated'
-    terms_of_service    '1'
-    verified_at { Time.current }
-    document_type "1"
-    document_number
   end
 
   factory :ballot do

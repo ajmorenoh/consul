@@ -1,8 +1,5 @@
 class Migrations::SpendingProposal::Vote
 
-  def new
-  end
-
   def migrate_delegated_votes
     delegated_votes.each do |delegated_vote|
       create_vote(delegated_vote)

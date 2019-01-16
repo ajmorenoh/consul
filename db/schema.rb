@@ -183,8 +183,8 @@ ActiveRecord::Schema.define(version: 20190124085815) do
 
   create_table "budget_headings", force: :cascade do |t|
     t.integer "group_id"
-    t.string  "name",       limit: 50
-    t.integer "price",      limit: 8
+    t.string  "name",                 limit: 50
+    t.integer "price",                limit: 8
     t.string  "slug"
     t.integer "population"
     t.boolean "allow_custom_content",            default: false
@@ -1720,6 +1720,7 @@ ActiveRecord::Schema.define(version: 20190124085815) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "signature_id"
+    t.boolean  "delegated",    default: false
   end
 
   add_index "votes", ["signature_id"], name: "index_votes_on_signature_id", using: :btree

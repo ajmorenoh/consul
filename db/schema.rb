@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190103132925) do
+ActiveRecord::Schema.define(version: 20190116152624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,8 +196,8 @@ ActiveRecord::Schema.define(version: 20190103132925) do
 
   create_table "budget_headings", force: :cascade do |t|
     t.integer "group_id"
-    t.string  "name",       limit: 50
-    t.integer "price",      limit: 8
+    t.string  "name",                 limit: 50
+    t.integer "price",                limit: 8
     t.string  "slug"
     t.integer "population"
     t.boolean "allow_custom_content",            default: false
@@ -1740,6 +1740,7 @@ ActiveRecord::Schema.define(version: 20190103132925) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "signature_id"
+    t.boolean  "delegated",    default: false
   end
 
   add_index "votes", ["signature_id"], name: "index_votes_on_signature_id", using: :btree

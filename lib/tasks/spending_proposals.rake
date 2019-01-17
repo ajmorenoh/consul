@@ -37,7 +37,12 @@ namespace :spending_proposals do
   desc "Migrates delegated votes to represented user votes"
   task migrate_delegated_votes: :environment do
     require "migrations/spending_proposal/vote"
+    puts "Starting to migrate delegated votes"
     Migrations::SpendingProposal::Vote.new.migrate_delegated_votes
+    puts "Finished migrating delegated votes"
+
+    puts "Starting to create budget investment votes"
     Migrations::SpendingProposal::Vote.new.create_budget_investment_votes
+    puts "Finished creating budget investment votes"
   end
 end

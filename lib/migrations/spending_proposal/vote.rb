@@ -13,6 +13,7 @@ class Migrations::SpendingProposal::Vote
       delegated: true
     }
     Vote.create!(vote_attributes)
+    print "."
   end
 
   def delegated_votes
@@ -44,6 +45,7 @@ class Migrations::SpendingProposal::Vote
   def create_budget_investment_votes
     spending_proposal_votes.each do |vote|
       create_budget_invesment_vote(vote)
+      print "."
     end
   end
 

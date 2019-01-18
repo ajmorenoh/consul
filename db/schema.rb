@@ -1757,7 +1757,7 @@ ActiveRecord::Schema.define(version: 20190124085815) do
     t.boolean  "header",                     default: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.integer  "site_customization_page_id", default: 0
+    t.integer  "site_customization_page_id"
   end
 
   add_index "widget_cards", ["site_customization_page_id"], name: "index_widget_cards_on_site_customization_page_id", using: :btree

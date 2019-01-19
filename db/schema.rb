@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190103132925) do
+ActiveRecord::Schema.define(version: 20190118135741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -335,6 +335,17 @@ ActiveRecord::Schema.define(version: 20190103132925) do
   end
 
   add_index "budget_recommendations", ["user_id"], name: "index_budget_recommendations_on_user_id", using: :btree
+
+  create_table "budget_translations", force: :cascade do |t|
+    t.integer  "budget_id",  null: false
+    t.string   "locale",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
+  add_index "budget_translations", ["budget_id"], name: "index_budget_translations_on_budget_id", using: :btree
+  add_index "budget_translations", ["locale"], name: "index_budget_translations_on_locale", using: :btree
 
   create_table "budget_valuator_assignments", force: :cascade do |t|
     t.integer  "valuator_id"

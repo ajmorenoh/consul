@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190118135741) do
+ActiveRecord::Schema.define(version: 20190119160418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -290,6 +290,18 @@ ActiveRecord::Schema.define(version: 20190118135741) do
   add_index "budget_investments", ["community_id"], name: "index_budget_investments_on_community_id", using: :btree
   add_index "budget_investments", ["heading_id"], name: "index_budget_investments_on_heading_id", using: :btree
   add_index "budget_investments", ["tsv"], name: "index_budget_investments_on_tsv", using: :gin
+
+  create_table "budget_phase_translations", force: :cascade do |t|
+    t.integer  "budget_phase_id", null: false
+    t.string   "locale",          null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.text     "description"
+    t.text     "summary"
+  end
+
+  add_index "budget_phase_translations", ["budget_phase_id"], name: "index_budget_phase_translations_on_budget_phase_id", using: :btree
+  add_index "budget_phase_translations", ["locale"], name: "index_budget_phase_translations_on_locale", using: :btree
 
   create_table "budget_phases", force: :cascade do |t|
     t.integer  "budget_id"

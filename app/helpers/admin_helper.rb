@@ -30,7 +30,8 @@ module AdminHelper
   end
 
   def menu_budgets?
-    %w[budgets budget_groups budget_headings budget_investments].include?(controller_name)
+    %w[budgets budget_phases budget_groups budget_headings
+       budget_investments].include?(controller_name)
   end
 
   def menu_budget?

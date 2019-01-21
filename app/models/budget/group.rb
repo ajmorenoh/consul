@@ -2,15 +2,20 @@ class Budget
   class Group < ActiveRecord::Base
     include Sluggable
 
+    translates :name, touch: true
+    include Globalizable
+
     belongs_to :budget
 
     has_many :headings, dependent: :destroy
 
+    validates_translation :name, presence: true
     validates :budget_id, presence: true
-    validates :name, presence: true, uniqueness: { scope: :budget }
     validates :slug, presence: true, format: /\A[a-z0-9\-_]+\z/
     validates :max_votable_headings, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
     validates :max_supportable_headings, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+
+    validate :name_uniqueness_by_budget
 
     scope :by_slug, ->(slug) { where(slug: slug) }
 
@@ -34,5 +39,10 @@ class Budget
       self.name = self.name.strip
     end
 
+    def name_uniqueness_by_budget
+      if budget.groups.includes(:translations).where(name: name).where.not(id: id).any?
+        errors.add(:name, I18n.t("errors.messages.taken"))
+      end
+    end
   end
 end

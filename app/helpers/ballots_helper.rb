@@ -19,6 +19,7 @@ module BallotsHelper
 
   def city_wide_amount_spent(ballot)
     ballot.amount_spent('all')
+  end
 
   def remaining_votes(ballot, group)
     if group.approval_voting?

@@ -41,7 +41,8 @@ class Budget
 
     def name_uniqueness_by_budget
       if budget.groups.includes(:translations).where(name: name).where.not(id: id).any?
-        errors.add(:name, I18n.t("errors.messages.taken"))
+        errors.add(:name)
+        translations.last.errors.add(:name, I18n.t("errors.messages.taken"))
       end
     end
   end

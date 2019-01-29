@@ -201,7 +201,7 @@ feature "Admin budget groups" do
       click_button "Save group"
 
       expect(page).not_to have_content "Group updated successfully"
-      expect(page).to have_css("label.error", text: "Name")
+      expect(page).to have_css("label.error", text: "Group name")
       expect(page).to have_css("small.error", text: "has already been taken")
     end
   end

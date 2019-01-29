@@ -36,7 +36,7 @@ class Budget
     end
 
     def strip_name
-      self.name = self.name.strip
+      name.strip!
     end
 
     def name_uniqueness_by_budget

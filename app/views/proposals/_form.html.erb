@@ -110,7 +110,7 @@
                         data: {js_url: suggest_tags_path} %>
     </div>
 
-    <% if current_user.unverified? %>
+    <% if show_responsible_name_field? %>
       <div class="small-12 column">
         <%= f.label :responsible_name, t("proposals.form.proposal_responsible_name") %>
         <p class="help-text" id="responsible-name-help-text"><%= t("proposals.form.proposal_responsible_name_note") %></p>

@@ -90,4 +90,8 @@ module ProposalsHelper
     controller_name == "human_rights"
   end
 
+  def show_responsible_name_field?
+    current_user.unverified? || current_user.document_number.nil?
+  end
+
 end

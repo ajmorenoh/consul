@@ -372,6 +372,28 @@ feature 'Proposals' do
     expect(Proposal.last.responsible_name).to eq(author.document_number)
   end
 
+  scenario "Responsible name field is shown for verified users with no document number" do
+    author = create(:user, :level_two, document_number: nil)
+    login_as(author)
+
+    visit new_proposal_path
+    expect(page).to have_selector("#proposal_responsible_name")
+
+    fill_in "Proposal title", with: "Help refugees"
+    fill_in "Proposal summary", with: "In summary what we want is..."
+    fill_in "Proposal text", with: "This is very important because..."
+    check "I agree to the Privacy Policy and the Terms and conditions of use"
+
+    click_button "Create proposal"
+    expect(page).not_to have_content "Proposal created successfully."
+    expect(page).to have_css("label.error", text: "Full name of the person submitting the proposal")
+    expect(page).to have_content "can't be blank, is too short (minimum is 6 characters)"
+
+    fill_in "Full name of the person submitting the proposal", with: "Jonh Doe"
+    click_button "Create proposal"
+    expect(page).to have_content "Proposal created successfully."
+  end
+
   scenario 'Errors on create' do
     author = create(:user)
     login_as(author)

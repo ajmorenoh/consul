@@ -470,7 +470,6 @@ es:
           title: Procesos de legislación colaborativa
           filters:
             open: Abiertos
-            next: Próximamente
             past: Pasados
             all: Todos
         new:

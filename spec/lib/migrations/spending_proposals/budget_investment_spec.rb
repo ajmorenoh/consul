@@ -58,6 +58,7 @@ describe Migrations::SpendingProposal::BudgetInvestment do
 
       spending_proposal.feasible = false
       spending_proposal.valuation_finished = true
+      spending_proposal.update(administrator: create(:administrator))
 
       spending_proposal.save(validate: false)
 
@@ -92,4 +93,54 @@ describe Migrations::SpendingProposal::BudgetInvestment do
 
   end
 
+  context "internal comments" do
+
+    it "migrates internal_comments string to a comment object" do
+      internal_comment = "This project will last 2 years"
+
+      spending_proposal.update(internal_comments: internal_comment)
+      spending_proposal.update(administrator: create(:administrator))
+
+      migration = Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal)
+      migration.update
+
+      comment = Comment.first
+      expect(Comment.count).to eq(1)
+      expect(comment.body).to eq(internal_comment)
+      expect(comment.author).to eq(spending_proposal.administrator.user)
+      expect(comment.commentable).to eq(budget_investment)
+      expect(comment.valuation).to eq(true)
+    end
+
+    it "does not create a comment if internal_comments is blank" do
+      migration = Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal)
+      migration.update
+
+      expect(Comment.count).to eq(0)
+    end
+
+    it "verifies if the comment already exists" do
+      internal_comment = "This project will last 2 years"
+
+      spending_proposal.update(internal_comments: internal_comment)
+      spending_proposal.update(administrator: create(:administrator))
+
+      Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal).update
+      Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal).update
+
+      expect(Comment.count).to eq(1)
+    end
+
+    it "assigns the first administrator if a spending proposal does not have one" do
+      first_admin = create(:administrator).user
+      internal_comment = "This project will last 2 years"
+
+      spending_proposal.update(internal_comments: internal_comment)
+
+      Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal).update
+
+      expect(Comment.first.author).to eq(first_admin)
+    end
+
+  end
 end

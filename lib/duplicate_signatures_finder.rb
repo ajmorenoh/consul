@@ -1,6 +1,12 @@
 class DuplicateSignaturesFinder
+  attr_reader :scope
+
+  def initialize(scope = Signature.all)
+    @scope = scope
+  end
+
   def all
-    Signature.where(id: expendables)
+    scope.where(id: expendables)
   end
 
   private

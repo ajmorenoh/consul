@@ -101,4 +101,27 @@ describe DuplicateSignaturesFinder do
       end
     end
   end
+
+  describe "#scope" do
+    let(:finder) { DuplicateSignaturesFinder.new(Signature.where(signature_sheet: sheet)) }
+
+    context "records in the scope" do
+      let!(:first) { create :signature, signature_sheet: sheet, user: user }
+      let!(:duplicate) { create :signature, signature_sheet: sheet, user: user }
+
+      it "returns the duplicate signatures" do
+        expect(finder.all).not_to include first
+        expect(finder.all).to eq [duplicate]
+      end
+    end
+
+    context "records not in the scope" do
+      let(:another_sheet) { create :signature_sheet, signable: investment }
+      before { 2.times { create :signature, signature_sheet: another_sheet, user: user } }
+
+      it "ignores the duplicate signatures" do
+        expect(finder.all).to be_empty
+      end
+    end
+  end
 end

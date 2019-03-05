@@ -299,4 +299,47 @@ describe Signature do
 
   end
 
+  describe ".for_budget" do
+    let!(:budget) { create(:budget) }
+    let!(:investment) { create(:budget_investment, budget: budget) }
+    let!(:sheet) { create(:signature_sheet, signable: investment) }
+    let!(:signature) { create(:signature, signature_sheet: sheet) }
+
+    context "only one signature and one sheet for the budget" do
+      it "returns the signature" do
+        expect(Signature.for_budget(budget)).to eq [signature]
+      end
+    end
+
+    context "several signatures for one sheet" do
+      let!(:another_signature) { create(:signature, signature_sheet: sheet) }
+
+      it "returns all signatures" do
+        expect(Signature.for_budget(budget)).to match_array([signature, another_signature])
+      end
+    end
+
+    context "signatures for several investments" do
+      let(:another_investment) { create(:budget_investment, budget: budget) }
+      let(:another_sheet) { create(:signature_sheet, signable: another_investment) }
+      let!(:another_signature) { create(:signature, signature_sheet: another_sheet) }
+
+      it "returns signatures for all investments" do
+        expect(Signature.for_budget(budget)).to match_array([signature, another_signature])
+      end
+    end
+
+    context "signatures for other budgets" do
+      let(:wrong_budget) { create(:budget) }
+      let(:wrong_investment) { create(:budget_investment, budget: wrong_budget) }
+      let(:wrong_sheet) { create(:signature_sheet, signable: wrong_investment) }
+      let!(:wrong_signature) { create(:signature, signature_sheet: wrong_sheet) }
+
+      it "does not return signatures for other budgets" do
+        expect(Signature.for_budget(budget)).to eq [signature]
+        expect(Signature.for_budget(budget)).not_to include wrong_signature
+      end
+    end
+  end
+
 end

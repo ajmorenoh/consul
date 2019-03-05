@@ -9,6 +9,7 @@ class Signature < ActiveRecord::Base
 
   scope :verified,   -> { where(verified: true) }
   scope :unverified, -> { where(verified: false) }
+  scope :for_budget, -> (budget) { where(signature_sheet: SignatureSheet.where(signable: budget.investments)) }
 
   delegate :signable, to: :signature_sheet
 

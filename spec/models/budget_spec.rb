@@ -299,4 +299,26 @@ describe Budget do
       expect(budget.city_heading).to eq nil
     end
   end
+
+  describe "#ordered_by_heading_name" do
+
+      it "Ordered by name with city heading first", :focus do
+        budget.update(phase: 'finished')
+
+        city_heading = create(:budget_heading, group: group, name: "City of New York")
+        create(:budget_heading, group: group, name: "Brooklyn")
+        create(:budget_heading, group: group, name: "Queens")
+        create(:budget_heading, group: group, name: "Manhattan")
+
+        allow_any_instance_of(Budget).to receive(:city_heading).and_return(city_heading)
+
+        headings = Budget.
+        expect()
+          expect("City of New York").to appear_before("Brooklyn")
+          expect("Brooklyn").to appear_before("Manhattan")
+          expect("Manhattan").to appear_before("Queens")
+        end
+      end
+
+    end
 end

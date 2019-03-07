@@ -51,6 +51,10 @@ class Budget
       name == "Toda la ciudad"
     end
 
+    def self.ordered_by_heading_name
+      headings.sort { |a, b| a == city_heading ? -1 : a.name <=> b.name }
+    end
+
     private
 
     def generate_slug?

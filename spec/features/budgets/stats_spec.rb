@@ -30,7 +30,7 @@ feature 'Stats' do
 
   end
 
-  describe "Show" do
+  context "Show" do
 
     it "is not accessible to normal users if phase is not 'finished'" do
       budget.update(phase: 'reviewing_ballots')
@@ -56,6 +56,28 @@ feature 'Stats' do
       expect(page).to have_content "Stats"
     end
 
-  end
+    context "headings" do
 
+      scenario "Displays headings ordered by name with city heading first" do
+        budget.update(phase: 'finished')
+
+        city_heading = create(:budget_heading, group: group, name: "City of New York")
+        create(:budget_heading, group: group, name: "Brooklyn")
+        create(:budget_heading, group: group, name: "Queens")
+        create(:budget_heading, group: group, name: "Manhattan")
+
+        allow_any_instance_of(Budget).to receive(:city_heading).and_return(city_heading)
+
+        visit budget_stats_path(budget)
+save_and_open_page
+        within("#headings") do
+          expect("City of New York").to appear_before("Brooklyn")
+          expect("Brooklyn").to appear_before("Manhattan")
+          expect("Manhattan").to appear_before("Queens")
+        end
+      end
+
+    end
+
+  end
 end

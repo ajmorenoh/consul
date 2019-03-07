@@ -20,7 +20,7 @@ module Budgets
       def load_heading
         if @budget.present?
           headings = @budget.headings
-          @heading = headings.find_by_slug_or_id(params[:heading_id]) || headings.first
+          @heading = headings.find_by_slug_or_id(params[:heading_id]) || @budget.city_heading
         end
       end
 

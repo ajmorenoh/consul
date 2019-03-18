@@ -42,12 +42,12 @@ describe Budget::Stats do
                                   investment: @investment4)
   end
 
-  let(:stats) { Budget::Stats.new(@budget).generate }
+  let(:stats) { Budget::Stats.new(@budget) }
 
   context "#total_participants" do
 
     it "returns the number of total participants" do
-      expect(stats[:total_participants]).to be 11
+      expect(stats.total_participants).to be 11
     end
 
   end
@@ -55,7 +55,7 @@ describe Budget::Stats do
   context "#total_participants_support_phase" do
 
     it "returns the number of total participants in the support phase" do
-      expect(stats[:total_participants_support_phase]).to be 2
+      expect(stats.total_participants_support_phase).to be 2
     end
 
   end
@@ -63,7 +63,7 @@ describe Budget::Stats do
   context "#total_participants_vote_phase" do
 
     it "returns the number of total participants in the votes phase" do
-      expect(stats[:total_participants_vote_phase]).to be 4
+      expect(stats.total_participants_vote_phase).to be 4
     end
 
   end
@@ -71,7 +71,7 @@ describe Budget::Stats do
   context "#total_budget_investments" do
 
     it "returns the number of total budget investments" do
-      expect(stats[:total_budget_investments]).to be 5
+      expect(stats.total_budget_investments).to be 5
     end
 
   end
@@ -79,7 +79,7 @@ describe Budget::Stats do
   context "#total_votes" do
 
     it "returns the number of total votes" do
-      expect(stats[:total_votes]).to be 4
+      expect(stats.total_votes).to be 4
     end
 
   end
@@ -87,7 +87,7 @@ describe Budget::Stats do
   context "#total_selected_investments" do
 
     it "returns the number of total selected investments" do
-      expect(stats[:total_selected_investments]).to be 4
+      expect(stats.total_selected_investments).to be 4
     end
 
   end
@@ -95,7 +95,7 @@ describe Budget::Stats do
   context "#total_unfeasible_investments" do
 
     it "returns the number of total unfeasible investments" do
-      expect(stats[:total_unfeasible_investments]).to be 1
+      expect(stats.total_unfeasible_investments).to be 1
     end
 
   end
@@ -103,7 +103,7 @@ describe Budget::Stats do
   context "#total_male_participants" do
 
     it "returns the number of total male participants" do
-      expect(stats[:total_male_participants]).to be 4
+      expect(stats.total_male_participants).to be 4
     end
 
   end
@@ -111,7 +111,7 @@ describe Budget::Stats do
   context "#total_female_participants" do
 
     it "returns the number of total female participants" do
-      expect(stats[:total_female_participants]).to be 6
+      expect(stats.total_female_participants).to be 6
     end
 
   end
@@ -119,7 +119,7 @@ describe Budget::Stats do
   context "#total_unknown_gender_or_age" do
 
     it "returns the number of total unknown participants' gender or age" do
-      expect(stats[:total_unknown_gender_or_age]).to be 1
+      expect(stats.total_unknown_gender_or_age).to be 1
     end
 
   end
@@ -127,18 +127,18 @@ describe Budget::Stats do
   context "#participants_by_age" do
 
     it "returns the age groups hash" do
-      expect(stats[:participants_by_age]["16 - 19"][:count]).to be 0
-      expect(stats[:participants_by_age]["20 - 24"][:count]).to be 7
-      expect(stats[:participants_by_age]["25 - 29"][:count]).to be 1
-      expect(stats[:participants_by_age]["30 - 34"][:count]).to be 0
-      expect(stats[:participants_by_age]["35 - 39"][:count]).to be 1
-      expect(stats[:participants_by_age]["40 - 44"][:count]).to be 1
-      expect(stats[:participants_by_age]["45 - 49"][:count]).to be 0
-      expect(stats[:participants_by_age]["50 - 54"][:count]).to be 1
-      expect(stats[:participants_by_age]["55 - 59"][:count]).to be 0
-      expect(stats[:participants_by_age]["60 - 64"][:count]).to be 0
-      expect(stats[:participants_by_age]["65 - 69"][:count]).to be 0
-      expect(stats[:participants_by_age]["70 - 74"][:count]).to be 0
+      expect(stats.participants_by_age["16 - 19"][:count]).to be 0
+      expect(stats.participants_by_age["20 - 24"][:count]).to be 7
+      expect(stats.participants_by_age["25 - 29"][:count]).to be 1
+      expect(stats.participants_by_age["30 - 34"][:count]).to be 0
+      expect(stats.participants_by_age["35 - 39"][:count]).to be 1
+      expect(stats.participants_by_age["40 - 44"][:count]).to be 1
+      expect(stats.participants_by_age["45 - 49"][:count]).to be 0
+      expect(stats.participants_by_age["50 - 54"][:count]).to be 1
+      expect(stats.participants_by_age["55 - 59"][:count]).to be 0
+      expect(stats.participants_by_age["60 - 64"][:count]).to be 0
+      expect(stats.participants_by_age["65 - 69"][:count]).to be 0
+      expect(stats.participants_by_age["70 - 74"][:count]).to be 0
     end
 
   end
@@ -146,7 +146,7 @@ describe Budget::Stats do
   context "#male_percentage" do
 
     it "returns the percentage of male participants" do
-      expect(stats[:male_percentage]).to be 40.0
+      expect(stats.male_percentage).to be 40.0
     end
 
   end
@@ -154,7 +154,7 @@ describe Budget::Stats do
   context "#female_percentage" do
 
     it "returns the percentage of female participants" do
-      expect(stats[:female_percentage]).to be 60.0
+      expect(stats.female_percentage).to be 60.0
     end
 
   end
@@ -162,7 +162,7 @@ describe Budget::Stats do
   context "#headings" do
 
     it "returns headings data" do
-      heading_stats = stats[:headings][@heading.id]
+      heading_stats = stats.headings[@heading.id]
       expect(heading_stats[:total_investments_count]).to be 5
       expect(heading_stats[:total_participants_support_phase]).to be 2
       expect(heading_stats[:total_participants_vote_phase]).to be 4

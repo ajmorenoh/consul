@@ -95,21 +95,6 @@ es:
   poll_questions:
     show:
       vote_error: "Algo ha fallado y tu voto no se ha podido registrar correctamente. Por favor comprueba que tu navegador soporta JavaScript y vuelve a intentarlo más tarde."
-  forums:
-    index:
-      deactivate_link: "Desactivar"
-      delegating: "Estás delegando tus votos en <strong>%{representative}</strong>"
-      not_delegating: No estás delegando tus votos
-      title: Delega tus votos
-      title_closed: Delegación de votos
-    show:
-      delegate_button: "Delegar en %{forum}"
-      sign_in_to_delegate: "Debes estar idenficado para delegar"
-      verify_accont_to_delegate: "Debes estar verificado para delegar"
-      no_votes: Este espacio de debate distrital aún no ha apoyado ningún proyecto
-      no_city_votes: Este espacio de debate distrital aún no ha apoyado ningún proyecto de ciudad
-      no_district_votes: Este espacio de debate distrital aún no ha apoyado ningún proyecto de distrito
-      confirm: Ya has votado algunos proyectos de gasto. Si delegas tu voto en %{forum}, tus votos se eliminarán y pasarás a votar lo que vote este espacio distrital.
   layouts:
     footer:
       copyright: Ayuntamiento de Madrid, %{year}

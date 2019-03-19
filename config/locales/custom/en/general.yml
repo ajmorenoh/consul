@@ -98,21 +98,6 @@ en:
     author_info:
       forum: District discussion space
     probe_plaza_banner: "#RemodelingPlazaEspaña"
-  forums:
-    index:
-      deactivate_link: "Deactivate"
-      delegating: "You are delegating your votes on <strong>%{representative}</strong>"
-      not_delegating: "You are not delegating your votes"
-      title: Delegate your votes
-      title_closed: Vote delegations
-    show:
-      delegate_button: "Delegate on %{forum}"
-      sign_in_to_delegate: "Sign in to delegate"
-      verify_accont_to_delegate: "Verify your account to delegate"
-      no_votes: This Forum has not supported any investment projects
-      no_city_votes: This Forum has not supported any city investment projects
-      no_district_votes: This Forum has not supported any district investment projects
-      confirm: You have already voted some investment projects. If you delegate your votes in %{forum}, your votes will be erased and you will vote whatever this forum votes.
   layouts:
     footer:
       participation_text: Decide how to shape the Madrid you want to live in.
@@ -179,7 +164,6 @@ en:
     spending_proposal:
       add: Add
       already_added: You have already added this investment project
-      forum: District discussion space
       vote: Vote
     header:
       check_ballot: Check my ballot

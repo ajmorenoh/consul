@@ -102,6 +102,41 @@ describe Statisticable do
     end
   end
 
+  describe "#geozone_percentage?" do
+    context "no participants" do
+      it "is false" do
+        expect(stats.geozone_percentage?).to be false
+      end
+    end
+
+    context "All participants have no defined geozone" do
+      before { create(:user, geozone: nil) }
+
+      it "is false" do
+        expect(stats.geozone_percentage?).to be false
+      end
+    end
+
+    context "All participants belong to geozones with no population" do
+      before { create(:user, geozone: create(:geozone)) }
+
+      it "is false" do
+        expect(stats.geozone_percentage?).to be false
+      end
+    end
+
+    context "There's a participant from a geozone with population" do
+      before do
+        create(:user, geozone: create(:geozone))
+        allow_any_instance_of(Geozone).to receive(:population).and_return(200)
+      end
+
+      it "is true" do
+        expect(stats.geozone?).to be true
+      end
+    end
+  end
+
   describe "#stats_methods" do
     it "includes total participants" do
       expect(stats.stats_methods).to include(:total_participants)

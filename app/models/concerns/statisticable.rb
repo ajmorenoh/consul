@@ -33,6 +33,10 @@ module Statisticable
       participants.where(geozone: geozones).any?
     end
 
+    def geozone_percentage?
+      geozone_stats.any?(&:population_percentage?)
+    end
+
     def total_male_participants
       participants.male.count
     end
@@ -58,20 +62,20 @@ module Statisticable
     end
 
     def participants_by_geozone
-      geozones.map do |geozone|
-        count = participants.where(geozone: geozone).count
-
+      geozone_stats.map do |stats|
         [
-          geozone.name,
+          stats.name,
           {
-            total: {
-              count: count,
-              percentage: calculate_percentage(count, total_participants)
-            },
-            percentage: calculate_percentage(count, geozone.users.count)
+            count: stats.count,
+            percentage: stats.percentage,
+            population_percentage: stats.population_percentage
           }
         ]
       end.to_h
+    end
+
+    def calculate_percentage(fraction, total)
+      PercentageCalculator.calculate(fraction, total)
     end
 
     private
@@ -136,10 +140,8 @@ module Statisticable
         Geozone.all.order("name")
       end
 
-      def calculate_percentage(fraction, total)
-        return 0.0 if total.zero?
-
-        (fraction * 100.0 / total).round(3)
+      def geozone_stats
+        geozones.map { |geozone| GeozoneStats.new(geozone, participants) }
       end
 
       def range_description(start, finish)
@@ -174,7 +176,7 @@ module Statisticable
     end
 
     def geozone_methods
-      [:participants_by_geozone]
+      %i[participants_by_geozone geozone_percentage?]
     end
 
     def stats_cache(*method_names)

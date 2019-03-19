@@ -29,15 +29,7 @@ section "Creating Settings" do
   Setting.create(key: "process.budgets", value: "true")
   Setting.create(key: "process.legislation", value: "true")
 
-  Setting.create(key: "feature.featured_proposals", value: "true")
-  Setting.create(key: "feature.spending_proposals", value: nil)
-  Setting.create(key: "feature.spending_proposal_features.voting_allowed", value: nil)
-  Setting.create(key: "feature.spending_proposal_features.phase1", value: nil)
-  Setting.create(key: "feature.spending_proposal_features.phase2", value: nil)
-  Setting.create(key: "feature.spending_proposal_features.phase3", value: "true")
-  Setting.create(key: "feature.spending_proposal_features.final_voting_allowed", value: "true")
-  Setting.create(key: "feature.spending_proposal_features.open_results_page", value: nil)
-
+  Setting.create(key: "feature.budgets", value: "true")
   Setting.create(key: "feature.twitter_login", value: "true")
   Setting.create(key: "feature.facebook_login", value: "true")
   Setting.create(key: "feature.google_login", value: "true")

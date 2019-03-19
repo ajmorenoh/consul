@@ -130,25 +130,10 @@ module CommonActions
     expect(page).not_to have_selector(".in-favor a")
   end
 
-  def create_spending_proposal_for(*users)
-    users.each do |user|
-      create(:spending_proposal, :finished, :feasible, author: user)
-    end
-  end
-
   def create_vote_for(*users)
     sp = first_or_create_spending_spending_proposal
     users.each do |user|
       create(:vote, votable: sp, voter: user)
-    end
-  end
-
-  end
-  def first_or_create_spending_spending_proposal
-    if SpendingProposal.any?
-      return SpendingProposal.first
-    else
-      return create(:spending_proposal, :finished, :feasible)
     end
   end
 

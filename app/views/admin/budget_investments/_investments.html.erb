@@ -47,15 +47,14 @@
 
     <tbody>
       <% @investments.each do |investment| %>
-        <% investment_id = investment.original_spending_proposal_id || investment.id %>
         <tr id="<%= dom_id(investment) %>" class="budget_investment">
           <td class="text-right">
-            <strong><%= investment_id %></strong>
+            <strong><%= investment.id %></strong>
           </td>
           <td>
             <%= link_to investment.title,
                         admin_budget_budget_investment_path(budget_id: @budget.id,
-                                                            id: investment_id,
+                                                            id: investment.id,
                                                             params: Budget::Investment.filter_params(params)),
                                                             target: "_blank" %>
           </td>

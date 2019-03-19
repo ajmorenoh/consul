@@ -33,10 +33,6 @@ module AdminHelper
     controller_name.starts_with?("budget")
   end
 
-  def menu_budget?
-    ["spending_proposals"].include?(controller_name)
-  end
-
   def menu_poll?
     %w[polls active_polls recounts results].include?(controller_name)
   end

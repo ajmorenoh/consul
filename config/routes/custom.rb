@@ -3,7 +3,6 @@ namespace :admin do
   resources :probes, only: [:index, :show]
 
   resource :stats, only: :show do
-    get :spending_proposals, on: :collection
     get :budgets, on: :collection
     get :budget_supporting, on: :member
     get :budget_balloting, on: :member
@@ -51,12 +50,6 @@ get "presupuestos/:budget_id/:id", to: "budgets/groups#show", as: 'custom_budget
 get "participatory_budget/investment_projects/:id", to: "budgets/investments#redirect_to_new_url", as: 'spending_proposals_to_budget_investments'
 
 scope '/participatory_budget' do
-  resources :spending_proposals, only: [:index, :destroy], path: 'investment_projects', controller: "budgets/investments" do #[:new, :create] temporary disabled
-    get :welcome, on: :collection
-    get :stats, on: :collection
-    post :vote, on: :member
-  end
-
   resource :budget_poll, only: [:show, :new, :create] do
     get :thanks, on: :collection
   end
@@ -157,7 +150,6 @@ get 'participatory_budget/select_district',        to: 'spending_proposals#selec
 get 'presupuestos-participativos-resultados',      to: 'spending_proposals#results',                    as: 'participatory_budget_results'
 get 'presupuestos-participativos-estadisticas',    to: 'spending_proposals#stats',                      as: 'participatory_budget_stats'
 get 'presupuestos-participativos-ejecuciones',     to: 'budgets/executions#show',                       as: 'participatory_budget_executions', defaults: {budget_id: '2016'}
-get 'participatory_budget_info',                   to: 'pages#show', id: 'help/budgets/info_2016', as: 'more_info_budgets_2016'
 get 'jornada-presupuestos-participativos',         to: 'budget_polls#new'
 get 'jornada-presupuestos-participativos/success', to: 'budget_polls#success'
 

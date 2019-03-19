@@ -18,12 +18,22 @@ describe GeozoneStats do
       1.times { create(:user, geozone: riverlands) }
     end
 
-    let(:winterfell_stats) { GeozoneStats.new(winterfell, User.all) }
-    let(:riverlands_stats) { GeozoneStats.new(riverlands, User.all) }
+    context "no geozone participants given" do
+      let(:winterfell_stats) { GeozoneStats.new(winterfell, User.all) }
+      let(:riverlands_stats) { GeozoneStats.new(riverlands, User.all) }
 
-    it "counts participants from the geozone" do
-      expect(winterfell_stats.count).to eq 2
-      expect(riverlands_stats.count).to eq 1
+      it "counts participants from the geozone" do
+        expect(winterfell_stats.count).to eq 2
+        expect(riverlands_stats.count).to eq 1
+      end
+    end
+
+    context "geozone participants given" do
+      let(:stats) { GeozoneStats.new(double, [], Array.new(4)) }
+
+      it "ignores the parameters and counts the given participants" do
+        expect(stats.count).to eq 4
+      end
     end
   end
 
@@ -33,12 +43,22 @@ describe GeozoneStats do
       1.times { create(:user, geozone: riverlands) }
     end
 
-    let(:winterfell_stats) { GeozoneStats.new(winterfell, User.all) }
-    let(:riverlands_stats) { GeozoneStats.new(riverlands, User.all) }
+    context "no geozone participants given" do
+      let(:winterfell_stats) { GeozoneStats.new(winterfell, User.all) }
+      let(:riverlands_stats) { GeozoneStats.new(riverlands, User.all) }
 
-    it "calculates percentage relative to the amount of participants" do
-      expect(winterfell_stats.percentage).to eq 66.667
-      expect(riverlands_stats.percentage).to eq 33.333
+      it "calculates percentage relative to the amount of participants" do
+        expect(winterfell_stats.percentage).to eq 66.667
+        expect(riverlands_stats.percentage).to eq 33.333
+      end
+    end
+
+    context "geozone stats given" do
+      let(:stats) { GeozoneStats.new(double, Array.new(10), Array.new(7)) }
+
+      it "ignores the geozone and just counts the participants" do
+        expect(stats.percentage).to eq 70.0
+      end
     end
   end
 

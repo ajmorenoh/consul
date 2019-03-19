@@ -1,13 +1,14 @@
 class GeozoneStats
   attr_reader :geozone, :participants
 
-  def initialize(geozone, participants)
+  def initialize(geozone, participants, geozone_participants = nil)
     @geozone = geozone
     @participants = participants
+    @geozone_participants = geozone_participants
   end
 
   def geozone_participants
-    participants.where(geozone: geozone)
+    @geozone_participants || participants.where(geozone: geozone)
   end
 
   def name

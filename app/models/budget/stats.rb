@@ -82,6 +82,12 @@ class Budget::Stats
       budget&.poll ? budget.poll.voters.pluck(:user_id) : []
     end
 
+    def geozone_stats
+      budget.headings.sort_by_name.map do |heading|
+        GeozoneStats.new(heading, participants, voters_and_balloters_by_heading(heading))
+      end
+    end
+
     def balloters_by_heading(heading_id)
       stats_cache("balloters_by_heading_#{heading_id}") do
         budget.ballots.joins(:lines)
@@ -101,7 +107,7 @@ class Budget::Stats
         total_investments_count: heading.investments.count,
         total_participants_support_phase: voters_by_heading(heading).count,
         total_participants_vote_phase: balloters_by_heading(heading.id).count,
-        total_participants_all_phase: voters_and_balloters_by_heading(heading)
+        total_participants_all_phase: voters_and_balloters_by_heading(heading).count
       }
     end
 
@@ -117,7 +123,7 @@ class Budget::Stats
     end
 
     def voters_and_balloters_by_heading(heading)
-      (voters_by_heading(heading) + balloters_by_heading(heading.id)).uniq.count
+      (voters_by_heading(heading) + balloters_by_heading(heading.id)).uniq
     end
 
     def participants_percent(heading_totals, groups_totals, phase)

@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   has_one :manager
   has_one :poll_officer, class_name: "Poll::Officer"
   has_one :organization
-  has_one :forum
   has_one :lock
   has_one :ballot
   has_many :flags
@@ -37,7 +36,6 @@ class User < ActiveRecord::Base
   has_many :legislation_answers, class_name: 'Legislation::Answer', dependent: :destroy, inverse_of: :user
   has_many :follows
   belongs_to :geozone
-  belongs_to :representative, class_name: "Forum"
 
   validates :username, presence: true, if: :username_required?
   validates :username, uniqueness: { scope: :registering_with_oauth }, if: :username_required?
@@ -59,7 +57,6 @@ class User < ActiveRecord::Base
   scope :administrators, -> { joins(:administrator) }
   scope :moderators,     -> { joins(:moderator) }
   scope :organizations,  -> { joins(:organization) }
-  scope :forums,         -> { joins(:forum) }
   scope :officials,      -> { where("official_level > 0") }
   scope :newsletter,     -> { where(newsletter: true) }
   scope :for_render,     -> { includes(:organization) }
@@ -175,10 +172,6 @@ class User < ActiveRecord::Base
 
   def organization?
     organization.present?
-  end
-
-  def forum?
-    forum.present?
   end
 
   def has_representative?

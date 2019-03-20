@@ -28,8 +28,8 @@ es:
       heading: "Distrito"
       investments_sent_html: "Propuestas<br>enviadas"
       participants_support_phase: Participantes fase apoyos
-      participants_voting_phase: Participantes fase votación
-      participants_total: Total de participantes
+      participants_vote_phase: Participantes fase votación
+      participants_every_phase: Total de participantes
       percent_total_participants_html: "% <br>Total<br>Participantes"
       percent_heading_census_html: "% <br>Censo<br>Distrito"
       no_demographic_data: "* No se dispone de los datos demográficos de %{total} participantes."

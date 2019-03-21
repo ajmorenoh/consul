@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190307165337) do
+ActiveRecord::Schema.define(version: 20190311220711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,25 +99,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
 
   add_index "answers", ["author_id"], name: "index_answers_on_author_id", using: :btree
   add_index "answers", ["context"], name: "index_answers_on_context", using: :btree
-
-  create_table "ballot_lines", force: :cascade do |t|
-    t.integer  "ballot_id"
-    t.integer  "spending_proposal_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "ballot_lines", ["ballot_id", "spending_proposal_id"], name: "index_ballot_lines_on_ballot_id_and_spending_proposal_id", unique: true, using: :btree
-  add_index "ballot_lines", ["spending_proposal_id"], name: "index_ballot_lines_on_spending_proposal_id", using: :btree
-
-  create_table "ballots", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.datetime "confirmed_at"
-    t.integer  "geozone_id"
-    t.integer  "ballot_lines_count", default: 0
-  end
 
   create_table "banner_sections", force: :cascade do |t|
     t.integer  "banner_id"
@@ -593,13 +574,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
   add_index "follows", ["followable_type", "followable_id"], name: "index_follows_on_followable_type_and_followable_id", using: :btree
   add_index "follows", ["user_id", "followable_type", "followable_id"], name: "access_follows", using: :btree
   add_index "follows", ["user_id"], name: "index_follows_on_user_id", using: :btree
-
-  create_table "forums", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "geozones", force: :cascade do |t|
     t.string   "name"
@@ -1483,43 +1457,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.string   "locale"
   end
 
-  create_table "spending_proposals", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "author_id"
-    t.string   "external_url"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.integer  "geozone_id"
-    t.integer  "price",                       limit: 8
-    t.boolean  "feasible"
-    t.string   "association_name"
-    t.text     "price_explanation"
-    t.text     "feasible_explanation"
-    t.text     "internal_comments"
-    t.boolean  "valuation_finished",                     default: false
-    t.text     "explanations_log"
-    t.integer  "administrator_id"
-    t.integer  "valuation_assignments_count",            default: 0
-    t.integer  "price_first_year",            limit: 8
-    t.string   "time_scope"
-    t.datetime "unfeasible_email_sent_at"
-    t.integer  "cached_votes_up",                        default: 0
-    t.tsvector "tsv"
-    t.integer  "comments_count",                         default: 0
-    t.datetime "hidden_at"
-    t.integer  "confidence_score",                       default: 0,     null: false
-    t.boolean  "forum",                                  default: false
-    t.string   "responsible_name",            limit: 60
-    t.integer  "physical_votes",                         default: 0
-    t.integer  "ballot_lines_count",                     default: 0
-    t.boolean  "compatible",                             default: true
-  end
-
-  add_index "spending_proposals", ["author_id"], name: "index_spending_proposals_on_author_id", using: :btree
-  add_index "spending_proposals", ["geozone_id"], name: "index_spending_proposals_on_geozone_id", using: :btree
-  add_index "spending_proposals", ["tsv"], name: "index_spending_proposals_on_tsv", using: :gin
-
   create_table "stats", force: :cascade do |t|
     t.string   "namespace"
     t.string   "group"
@@ -1628,7 +1565,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.integer  "district_wide_spending_proposals_supported_count",            default: 10
     t.integer  "city_wide_spending_proposals_supported_count",                default: 10
     t.integer  "supported_spending_proposals_geozone_id"
-    t.integer  "representative_id"
     t.boolean  "accepted_delegation_alert",                                   default: false
     t.string   "gender",                                           limit: 10
     t.datetime "date_of_birth"
@@ -1656,13 +1592,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
   add_index "users", ["password_changed_at"], name: "index_users_on_password_changed_at", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
-
-  create_table "valuation_assignments", force: :cascade do |t|
-    t.integer  "valuator_id"
-    t.integer  "spending_proposal_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
 
   create_table "valuator_groups", force: :cascade do |t|
     t.string  "name"
@@ -1780,7 +1709,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "signature_id"
-    t.boolean  "delegated",    default: false
   end
 
   add_index "votes", ["signature_id"], name: "index_votes_on_signature_id", using: :btree

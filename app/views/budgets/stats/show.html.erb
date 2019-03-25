@@ -75,9 +75,12 @@
             ) %>
 
             <%= number_with_info_tags(@stats[:total_unfeasible_investments],
-                                      t("stats.budgets.total_unfeasible_investments")) %>
+                                      t("stats.budgets.total_unfeasible_investments"),
+                                      html_class: "small") %>
+
             <%= number_with_info_tags(@stats[:total_selected_investments],
-                                      t("stats.budgets.total_selected_investments")) %>
+                                      t("stats.budgets.total_selected_investments"),
+                                      html_class: "small") %>
           </div>
 
           <div id="stats_by_phase" class="stats-group">

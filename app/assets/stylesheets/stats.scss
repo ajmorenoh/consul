@@ -84,6 +84,18 @@
       color: $text-medium;
       font-style: italic;
     }
+
+    &.small {
+
+      .number {
+        font-size: rem-calc(36);
+        line-height: rem-calc(36);
+      }
+
+      .info {
+        font-size: $small-font-size;
+      }
+    }
   }
 
   .progress {

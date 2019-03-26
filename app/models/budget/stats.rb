@@ -46,7 +46,7 @@ class Budget::Stats
   end
 
   def total_participants_vote_phase
-    balloters.count
+    participant_ids_vote_phase.count
   end
 
   def total_budget_investments

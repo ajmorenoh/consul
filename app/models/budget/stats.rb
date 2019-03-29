@@ -122,12 +122,6 @@ class Budget::Stats
       budget&.poll ? budget.poll.voters.pluck(:user_id) : []
     end
 
-    def geozone_stats
-      budget.headings.sort_by_name.map do |heading|
-        GeozoneStats.new(heading, participants, voters_and_balloters_by_heading(heading))
-      end
-    end
-
     def balloters_by_heading(heading_id)
       stats_cache("balloters_by_heading_#{heading_id}") do
         budget.ballots.joins(:lines)

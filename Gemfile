@@ -20,7 +20,7 @@ gem "devise-async", "~> 1.0.0"
 gem "devise_security_extension", git: "https://github.com/phatworx/devise_security_extension.git" #, "~> 0.10"
 gem 'foundation-rails', '~> 6.4.3.0'
 gem 'foundation_rails_helper', '~> 2.0.0'
-gem "globalize", "~> 5.2.0"
+gem "globalize", git: "https://github.com/microweb10/globalize.git", branch: "fallbacks_not_in_request_store"
 gem "globalize-accessors", "~> 0.2.1"
 gem 'graphiql-rails', '~> 1.4.1'
 gem 'graphql', '~> 1.7.8'

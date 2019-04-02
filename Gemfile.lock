@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/microweb10/globalize.git
+  revision: 48d0112e83ebbc27de6dd0712201310bb79c6836
+  branch: fallbacks_not_in_request_store
+  specs:
+    globalize (5.2.0)
+      activemodel (>= 4.2, < 6.1)
+      activerecord (>= 4.2, < 6.1)
+      request_store (~> 1.0)
+
+GIT
   remote: https://github.com/phatworx/devise_security_extension.git
   revision: b2ee978af7d49f0fb0e7271c6ac074dfb4d39353
   specs:
@@ -200,10 +210,6 @@ GEM
     geocoder (1.4.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    globalize (5.2.0)
-      activemodel (>= 4.2, < 5.3)
-      activerecord (>= 4.2, < 5.3)
-      request_store (~> 1.0)
     globalize-accessors (0.2.1)
       globalize (~> 5.0, >= 5.0.0)
     graphiql-rails (1.4.8)
@@ -559,7 +565,7 @@ DEPENDENCIES
   faker (~> 1.8.7)
   foundation-rails (~> 6.4.3.0)
   foundation_rails_helper (~> 2.0.0)
-  globalize (~> 5.2.0)
+  globalize!
   globalize-accessors (~> 0.2.1)
   graphiql-rails (~> 1.4.1)
   graphql (~> 1.7.8)

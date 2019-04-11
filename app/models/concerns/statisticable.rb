@@ -11,7 +11,9 @@ module Statisticable
   end
 
   def generate
-    stats_methods.each { |stat_name| send(stat_name) }
+    ActiveRecord::Base.connection.cache do
+      stats_methods.each { |stat_name| send(stat_name) }
+    end
   end
 
   def stats_methods
@@ -34,8 +36,20 @@ module Statisticable
     participants.where(geozone: geozones).any?
   end
 
+  def users
+    User.unscoped
+  end
+
+  def table_name
+    @table_name ||= "participants_temp_#{SecureRandom.hex}"
+  end
+
   def participants
-    @participants ||= User.unscoped.where(id: participant_ids)
+    return @participants if @participants # TODO: ugly
+
+    ActiveRecord::Base.connection.create_table(table_name, temporary: true, as: users.where(id: participant_ids).to_sql) # TODO: remove table name and use it only when in #generate
+
+    @participants = users.from("#{table_name} AS users")
   end
 
   def total_male_participants

@@ -18,9 +18,9 @@ class Poll
     before_save :update_logs
 
     def update_logs
-      if count_changed? && count_was.present?
-        self.count_log += ":#{count_was.to_s}"
-        self.officer_assignment_id_log += ":#{officer_assignment_id_was.to_s}"
+      if will_save_change_to_count? && count_in_database.present?
+        self.count_log += ":#{count_in_database.to_s}"
+        self.officer_assignment_id_log += ":#{officer_assignment_id_in_database.to_s}"
       end
     end
   end

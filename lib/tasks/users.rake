@@ -52,7 +52,7 @@ namespace :users do
           if u.save
             print "."
           else
-            print "\n\nUpdate error for user: #{u.id}. Old doc:#{u.document_number_was}, new doc: #{u.document_number}. Errors: #{u.errors.full_messages} \n\n"
+            print "\n\nUpdate error for user: #{u.id}. Old doc:#{u.document_number_in_database}, new doc: #{u.document_number}. Errors: #{u.errors.full_messages} \n\n"
           end
         else
           print "X"

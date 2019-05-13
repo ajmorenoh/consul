@@ -12,7 +12,7 @@ class Officing::Residence
   validates :year_of_birth, presence: { unless: :letter? }
 
   validate :allowed_age
-  validate :residence_in_madrid
+  validate :residence_tenant
   validate :not_voted, if: :letter?
 
   def initialize(attrs = {})
@@ -68,12 +68,12 @@ class Officing::Residence
                document_type:   document_type).first
   end
 
-  def residence_in_madrid
+  def residence_tenant
     return if errors.any?
 
     unless residency_valid?
       store_failed_census_call
-      errors.add(:residence_in_madrid, false)
+      errors.add(:residence_tenant, false)
     end
   end
 

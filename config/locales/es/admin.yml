@@ -812,8 +812,9 @@ es:
         segment_recipient: Destinatarios
         from: Dirección de correo electrónico que aparecerá como remitente de la newsletter
         body: Contenido del email
-        body_help_text: Así es como verán el email los usuarios
+        body_help_text: Así es como verán el email los usuarios.
         send_alert: '¿Estás seguro/a de que quieres enviar esta newsletter a %{n} usuarios?'
+        header_footer_help_text_html: "El encabezado y pie son los mismos en todos los emails, puedes modificarlos en <code>app/views/layouts/mailer_header</code> y <code>app/views/layouts/mailer_footer</code>."
     admin_notifications:
       create_success: Notificación creada correctamente
       update_success: Notificación actualizada correctamente

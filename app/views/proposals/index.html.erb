@@ -59,7 +59,7 @@
       <% end %>
 
       <% if show_featured_proposals? %>
-        <div id="featured-proposals" class="row featured-proposals">
+        <div id="featured-proposals" class="row featured-proposals margin-bottom">
           <div class="small-12 column">
             <h2>
               <%= t("proposals.index.featured_proposals") %>
@@ -78,8 +78,9 @@
       </div>
 
       <% unless params[:retired].present? || params[:selected].present? %>
-        <%= render "shared/advanced_search",
-                   search_path: path_to_search_proposals  %>
+        <div class="show-for-small-only">
+          <%= render "shared/advanced_search", search_path: path_to_search_proposals, position: "list" %>
+        </div>
       <% end %>
 
       <% unless params[:selected].present? %>
@@ -124,6 +125,13 @@
         <%= link_to t("proposals.index.start_proposal"),
                     new_proposal_path,
                     class: "button expanded" %>
+
+        <%= render "shared/search_form", search_path: current_path_with_query_params(page: 1),
+                                         i18n_namespace: "proposals.index.search_form",
+                                         id: "search_form" %>
+        <% unless params[:retired].present? || params[:selected].present? %>
+          <%= render "shared/advanced_search", search_path: path_to_search_proposals, position: "sidebar" %>
+        <% end %>
 
         <div class="sidebar-divider"></div>
         <h2 class="sidebar-title"><%= t("proposals.index.selected_proposals") %></h2>

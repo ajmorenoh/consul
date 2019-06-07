@@ -1147,7 +1147,7 @@ describe "Proposals" do
 
         visit proposals_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: "Schwifty"
           click_button "Search"
         end
@@ -1167,7 +1167,7 @@ describe "Proposals" do
 
         visit proposals_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: proposal1.code
           click_button "Search"
         end
@@ -1183,7 +1183,7 @@ describe "Proposals" do
       scenario "Maintain search criteria" do
         visit proposals_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: "Schwifty"
           click_button "Search"
         end
@@ -1346,9 +1346,11 @@ describe "Proposals" do
 
             visit proposals_path
 
-            click_link "Advanced search"
-            select "Last 24 hours", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last 24 hours", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             expect(page).to have_content("There are 2 citizen proposals")
 
@@ -1366,9 +1368,11 @@ describe "Proposals" do
 
             visit proposals_path
 
-            click_link "Advanced search"
-            select "Last week", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last week", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             expect(page).to have_content("There are 2 citizen proposals")
 
@@ -1386,9 +1390,11 @@ describe "Proposals" do
 
             visit proposals_path
 
-            click_link "Advanced search"
-            select "Last month", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last month", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             expect(page).to have_content("There are 2 citizen proposals")
 
@@ -1406,9 +1412,11 @@ describe "Proposals" do
 
             visit proposals_path
 
-            click_link "Advanced search"
-            select "Last year", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last year", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             expect(page).to have_content("There are 2 citizen proposals")
 
@@ -1428,11 +1436,13 @@ describe "Proposals" do
 
           visit proposals_path
 
-          click_link "Advanced search"
-          select "Customized", from: "js-advanced-search-date-min"
-          fill_in "advanced_search_date_min", with: 7.days.ago
-          fill_in "advanced_search_date_max", with: 1.day.ago
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select "Customized", from: "js-advanced-search-date-min-sidebar"
+            fill_in "advanced_search_date_min", with: 7.days.ago
+            fill_in "advanced_search_date_max", with: 1.day.ago
+            click_button "Filter"
+          end
 
           expect(page).to have_content("There are 2 citizen proposals")
 
@@ -1450,11 +1460,13 @@ describe "Proposals" do
 
           visit proposals_path
 
-          click_link "Advanced search"
-          select "Customized", from: "js-advanced-search-date-min"
-          fill_in "advanced_search_date_min", with: 4000.years.ago
-          fill_in "advanced_search_date_max", with: "wrong date"
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select "Customized", from: "js-advanced-search-date-min-sidebar"
+            fill_in "advanced_search_date_min", with: 4000.years.ago
+            fill_in "advanced_search_date_max", with: "wrong date"
+            click_button "Filter"
+          end
 
           expect(page).to have_content("There are 3 citizen proposals")
 
@@ -1475,10 +1487,12 @@ describe "Proposals" do
 
           visit proposals_path
 
-          click_link "Advanced search"
-          fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          select "Last 24 hours", from: "js-advanced-search-date-min"
+          within("aside") do
+            click_link "Advanced search"
+            fill_in "Write the text", with: "Schwifty"
+            select Setting["official_level_1_name"], from: "advanced_search_official_level"
+            select "Last 24 hours", from: "js-advanced-search-date-min-sidebar"
+          end
 
           click_button "Filter"
 
@@ -1491,17 +1505,19 @@ describe "Proposals" do
 
         scenario "Maintain advanced search criteria", :js do
           visit proposals_path
-          click_link "Advanced search"
 
-          fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          select "Last 24 hours", from: "js-advanced-search-date-min"
+          within("aside") do
+            click_link "Advanced search"
+            fill_in "Write the text", with: "Schwifty"
+            select Setting["official_level_1_name"], from: "advanced_search_official_level"
+            select "Last 24 hours", from: "js-advanced-search-date-min-sidebar"
+          end
 
           click_button "Filter"
 
           expect(page).to have_content("citizen proposals cannot be found")
 
-          within "#js-advanced-search" do
+          within "#js-advanced-search-sidebar" do
             expect(page).to have_selector("input[name='search'][value='Schwifty']")
             expect(page).to have_select("advanced_search[official_level]", selected: Setting["official_level_1_name"])
             expect(page).to have_select("advanced_search[date_min]", selected: "Last 24 hours")
@@ -1510,16 +1526,18 @@ describe "Proposals" do
 
         scenario "Maintain custom date search criteria", :js do
           visit proposals_path
-          click_link "Advanced search"
 
-          select "Customized", from: "js-advanced-search-date-min"
-          fill_in "advanced_search_date_min", with: 7.days.ago.strftime("%d/%m/%Y")
-          fill_in "advanced_search_date_max", with: 1.day.ago.strftime("%d/%m/%Y")
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select "Customized", from: "js-advanced-search-date-min-sidebar"
+            fill_in "advanced_search_date_min", with: 7.days.ago.strftime("%d/%m/%Y")
+            fill_in "advanced_search_date_max", with: 1.day.ago.strftime("%d/%m/%Y")
+            click_button "Filter"
+          end
 
           expect(page).to have_content("citizen proposals cannot be found")
 
-          within "#js-advanced-search" do
+          within "#js-advanced-search-sidebar" do
             expect(page).to have_select("advanced_search[date_min]", selected: "Customized")
             expect(page).to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
             expect(page).to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
@@ -1582,8 +1600,12 @@ describe "Proposals" do
       create(:follow, followable: proposal5, user: user)
 
       visit proposals_path
-      fill_in "search", with: "Show you got"
-      click_button "Search"
+
+      within("#search_form") do
+        fill_in "search", with: "Show you got"
+        click_button "Search"
+      end
+
       click_link "recommendations"
       expect(page).to have_selector("a.is-active", text: "recommendations")
 
@@ -1603,7 +1625,7 @@ describe "Proposals" do
       proposal = create(:proposal, title: "Abcdefghi")
 
       visit proposals_path
-      within(".expanded #search_form") do
+      within("#search_form") do
         fill_in "search", with: proposal.title
         click_button "Search"
       end

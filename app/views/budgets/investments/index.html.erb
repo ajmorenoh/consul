@@ -55,7 +55,9 @@
         </div>
       <% end %>
 
-      <%= render("shared/advanced_search", search_path: budget_investments_url(@budget)) %>
+      <div class="show-for-small-only">
+        <%= render "shared/advanced_search", search_path: budget_investments_url(@budget), position: "list" %>
+      </div>
 
       <% if unfeasible_or_unselected_filter %>
         <ul class="no-bullet submenu">

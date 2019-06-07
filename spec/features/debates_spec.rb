@@ -630,7 +630,7 @@ describe "Debates" do
 
         visit debates_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: "Schwifty"
           click_button "Search"
         end
@@ -647,7 +647,7 @@ describe "Debates" do
       scenario "Maintain search criteria" do
         visit debates_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: "Schwifty"
           click_button "Search"
         end
@@ -666,9 +666,11 @@ describe "Debates" do
 
         visit debates_path
 
-        click_link "Advanced search"
-        fill_in "Write the text", with: "Schwifty"
-        click_button "Filter"
+        within("aside") do
+          click_link "Advanced search"
+          fill_in "Write the text", with: "Schwifty"
+          click_button "Filter"
+        end
 
         expect(page).to have_content("There are 2 debates")
 
@@ -691,9 +693,11 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select Setting["official_level_1_name"], from: "advanced_search_official_level"
+            click_button "Filter"
+          end
 
           expect(page).to have_content("There are 2 debates")
 
@@ -714,9 +718,11 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          select Setting["official_level_2_name"], from: "advanced_search_official_level"
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select Setting["official_level_2_name"], from: "advanced_search_official_level"
+            click_button "Filter"
+          end
 
           expect(page).to have_content("There are 2 debates")
 
@@ -737,9 +743,11 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          select Setting["official_level_3_name"], from: "advanced_search_official_level"
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select Setting["official_level_3_name"], from: "advanced_search_official_level"
+            click_button "Filter"
+          end
 
           expect(page).to have_content("There are 2 debates")
 
@@ -760,9 +768,11 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          select Setting["official_level_4_name"], from: "advanced_search_official_level"
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select Setting["official_level_4_name"], from: "advanced_search_official_level"
+            click_button "Filter"
+          end
 
           expect(page).to have_content("There are 2 debates")
 
@@ -809,9 +819,11 @@ describe "Debates" do
 
             visit debates_path
 
-            click_link "Advanced search"
-            select "Last 24 hours", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last 24 hours", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             within("#debates") do
               expect(page).to have_css(".debate", count: 2)
@@ -829,9 +841,11 @@ describe "Debates" do
 
             visit debates_path
 
-            click_link "Advanced search"
-            select "Last week", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last week", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             within("#debates") do
               expect(page).to have_css(".debate", count: 2)
@@ -849,9 +863,11 @@ describe "Debates" do
 
             visit debates_path
 
-            click_link "Advanced search"
-            select "Last month", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last month", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             within("#debates") do
               expect(page).to have_css(".debate", count: 2)
@@ -869,9 +885,11 @@ describe "Debates" do
 
             visit debates_path
 
-            click_link "Advanced search"
-            select "Last year", from: "js-advanced-search-date-min"
-            click_button "Filter"
+            within("aside") do
+              click_link "Advanced search"
+              select "Last year", from: "js-advanced-search-date-min-sidebar"
+              click_button "Filter"
+            end
 
             within("#debates") do
               expect(page).to have_css(".debate", count: 2)
@@ -891,11 +909,13 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          select "Customized", from: "js-advanced-search-date-min"
-          fill_in "advanced_search_date_min", with: 7.days.ago
-          fill_in "advanced_search_date_max", with: 1.day.ago
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select "Customized", from: "js-advanced-search-date-min-sidebar"
+            fill_in "advanced_search_date_min", with: 7.days.ago
+            fill_in "advanced_search_date_max", with: 1.day.ago
+            click_button "Filter"
+          end
 
           within("#debates") do
             expect(page).to have_css(".debate", count: 2)
@@ -913,11 +933,13 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          select "Customized", from: "js-advanced-search-date-min"
-          fill_in "advanced_search_date_min", with: "9"
-          fill_in "advanced_search_date_max", with: "444444444"
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select "Customized", from: "js-advanced-search-date-min-sidebar"
+            fill_in "advanced_search_date_min", with: "9"
+            fill_in "advanced_search_date_max", with: "444444444"
+            click_button "Filter"
+          end
 
           within("#debates") do
             expect(page).to have_css(".debate", count: 3)
@@ -938,10 +960,12 @@ describe "Debates" do
 
           visit debates_path
 
-          click_link "Advanced search"
-          fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          select "Last 24 hours", from: "js-advanced-search-date-min"
+          within("aside") do
+            click_link "Advanced search"
+            fill_in "Write the text", with: "Schwifty"
+            select Setting["official_level_1_name"], from: "advanced_search_official_level"
+            select "Last 24 hours", from: "js-advanced-search-date-min-sidebar"
+          end
 
           click_button "Filter"
 
@@ -953,15 +977,16 @@ describe "Debates" do
 
         scenario "Maintain advanced search criteria", :js do
           visit debates_path
-          click_link "Advanced search"
 
-          fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          select "Last 24 hours", from: "js-advanced-search-date-min"
+          within("aside") do
+            click_link "Advanced search"
+            fill_in "Write the text", with: "Schwifty"
+            select Setting["official_level_1_name"], from: "advanced_search_official_level"
+            select "Last 24 hours", from: "js-advanced-search-date-min-sidebar"
+            click_button "Filter"
+          end
 
-          click_button "Filter"
-
-          within "#js-advanced-search" do
+          within "#js-advanced-search-sidebar" do
             expect(page).to have_selector("input[name='search'][value='Schwifty']")
             expect(page).to have_select("advanced_search[official_level]", selected: Setting["official_level_1_name"])
             expect(page).to have_select("advanced_search[date_min]", selected: "Last 24 hours")
@@ -970,14 +995,16 @@ describe "Debates" do
 
         scenario "Maintain custom date search criteria", :js do
           visit debates_path
-          click_link "Advanced search"
 
-          select "Customized", from: "js-advanced-search-date-min"
-          fill_in "advanced_search_date_min", with: 7.days.ago.strftime("%d/%m/%Y")
-          fill_in "advanced_search_date_max", with: 1.day.ago.strftime("%d/%m/%Y")
-          click_button "Filter"
+          within("aside") do
+            click_link "Advanced search"
+            select "Customized", from: "js-advanced-search-date-min-sidebar"
+            fill_in "advanced_search_date_min", with: 7.days.ago.strftime("%d/%m/%Y")
+            fill_in "advanced_search_date_max", with: 1.day.ago.strftime("%d/%m/%Y")
+            click_button "Filter"
+          end
 
-          within "#js-advanced-search" do
+          within "#js-advanced-search-sidebar" do
             expect(page).to have_select("advanced_search[date_min]", selected: "Customized")
             expect(page).to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
             expect(page).to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
@@ -1012,8 +1039,12 @@ describe "Debates" do
       debate4 = create(:debate, title: "Do not display",    cached_votes_up: 1,   created_at: 1.week.ago)
 
       visit debates_path
-      fill_in "search", with: "Show you got"
-      click_button "Search"
+
+      within("#search_form") do
+        fill_in "search", with: "Show you got"
+        click_button "Search"
+      end
+
       click_link "newest"
       expect(page).to have_selector("a.is-active", text: "newest")
 
@@ -1040,8 +1071,12 @@ describe "Debates" do
       create(:follow, followable: proposal1, user: user)
 
       visit debates_path
-      fill_in "search", with: "Show you got"
-      click_button "Search"
+
+      within("#search_form") do
+        fill_in "search", with: "Show you got"
+        click_button "Search"
+      end
+
       click_link "recommendations"
       expect(page).to have_selector("a.is-active", text: "recommendations")
 
@@ -1061,7 +1096,7 @@ describe "Debates" do
       debate = create(:debate, title: "Abcdefghi")
 
       visit debates_path
-      within(".expanded #search_form") do
+      within("#search_form") do
         fill_in "search", with: debate.title
         click_button "Search"
       end

@@ -46,7 +46,7 @@ describe "Human Rights" do
 
         visit human_rights_proposals_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: "Schwifty"
           click_button "Search"
         end
@@ -68,7 +68,7 @@ describe "Human Rights" do
 
         visit human_rights_proposals_path
 
-        within(".expanded #search_form") do
+        within("#search_form") do
           fill_in "search", with: "educación"
           click_button "Search"
         end

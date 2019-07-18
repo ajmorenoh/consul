@@ -23,7 +23,7 @@
 
                   <%= link_to t("budgets.index.milestones"),
                               budget_executions_path(budget),
-                              class: "button" %>
+                              class: "button" if budget != Budget.last %>
                 </div>
               </div>
             </div>

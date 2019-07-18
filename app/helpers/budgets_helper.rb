@@ -107,16 +107,21 @@ module BudgetsHelper
   end
 
   def budget_subnav_items_for(budget)
-    {
-      results:    t("budgets.results.link"),
-      stats:      t("stats.budgets.link"),
-      executions: t("budgets.executions.link")
-    }.select { |section, _| can?(:"read_#{section}", budget) }.map do |section, text|
+    items = subnav_items(budget)
+    items.select { |section, _| can?(:"read_#{section}", budget) }.map do |section, text|
       {
         text: text,
         url:  send("budget_#{section}_path", budget),
         active: controller_name == section.to_s
       }
     end
+  end
+
+  def subnav_items(budget)
+    items = {}
+    items[:results] = t("budgets.results.link")
+    items[:stats] = t("stats.budgets.link")
+    items[:executions] = t("budgets.executions.link") if budget != Budget.last
+    items
   end
 end
